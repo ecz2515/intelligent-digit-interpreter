@@ -18,8 +18,17 @@ These instructions will get you a copy of the project up and running on your loc
 - Node.js and npm
 - TensorFlow 2.x
 - Flask
+- Git LFS (for handling large files)
 
 ### Installation
+
+### Git LFS Setup
+
+Before cloning the repository, ensure you have Git LFS installed on your system. This is necessary to properly manage large files in the project. Install Git LFS by following the instructions on the [Git LFS website](https://git-lfs.github.com/). After installing, set up Git LFS:
+
+```sh
+git lfs install
+```
 
 1. Clone the repository:
 
