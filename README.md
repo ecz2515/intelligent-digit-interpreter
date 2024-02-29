@@ -68,7 +68,7 @@ Once both the frontend and backend are running, navigate to the web interface pr
 
 ## Author
 
-- **Evan Chen** - _Initial work_
+- **Evan Chen** - Workshops Committee Chair, Winter 2024
 
 ## License
 
