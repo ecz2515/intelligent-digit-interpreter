@@ -63,30 +63,24 @@ const App = () => {
     }
 };
 
-  const prepareImageFormData = async () => {
-    const uri = await captureDrawing();
+const prepareImageFormData = async () => {
+  const uri = await captureDrawing();
 
-    if (!uri) {
+  if (!uri) {
       console.error('URI is not defined.');
       return null;
-    }
+  }
 
-    const formData = new FormData();
-    const fixedUri = Platform.OS === 'android' ? uri : uri.replace('file://', '');
-    console.log('Fixed URI:', fixedUri);
+  // Convert URI to Blob for web
+  const response = await fetch(uri);
+  const blob = await response.blob();
 
-    formData.append('image', {
-      uri: fixedUri,
-      type: 'image/jpeg',
-      name: 'drawing.jpg',
-    });
+  const formData = new FormData();
+  formData.append('image', blob, 'drawing.jpg');
 
-    for (let [key, value] of formData.entries()) {
-      console.log(`${key}: ${value}`);
-    }
+  return formData;
+};
 
-    return formData;
-  };
 
 
   const sendImageToBackend = async () => {
@@ -96,11 +90,12 @@ const App = () => {
         alert('Failed to prepare image data');
         return;
     }
-    console.log('Form data:', formData)
+    console.log('Sending FormData:', formData)
 
+    // Note: We are not setting Content-Type header manually
     fetch('http://127.0.0.1:5000/predict', {
-    method: 'POST',
-    body: formData,
+        method: 'POST',
+        body: formData,
     })
     .then(response => response.json())
     .then(data => {
@@ -115,8 +110,8 @@ const App = () => {
         console.error('Error:', error);
         alert('Failed to predict digit');
     });
-
   };
+
 
   const clearDrawing = () => {
     setPaths([]);
