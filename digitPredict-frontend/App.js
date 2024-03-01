@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { StyleSheet, View, TouchableOpacity, Text, Alert, Platform, Touchable } from 'react-native';
+import { StyleSheet, View, TouchableOpacity, Text, Alert, Platform } from 'react-native';
 import { captureRef } from 'react-native-view-shot';
 import Svg, { Path } from 'react-native-svg';
 
@@ -49,16 +49,73 @@ const App = () => {
   // Function to capture the drawing area
   const captureDrawing = async () => {
     try {
-      const uri = await captureViewRef(drawAreaRef, {
-        format: 'jpg',
-        quality: 0.8,
-      });
-      console.log('Image saved to', uri);
-      Alert.alert('Image Captured', uri);
+        const uri = await captureRef(drawAreaRef, {
+            format: 'jpg',
+            quality: 0.8,
+        });
+        console.log('Image URI:', uri); // Log the URI to debug
+        Alert.alert('Image Captured', uri);
+        return uri; // Return URI for further processing
     } catch (error) {
-      console.error('Capture failed', error);
-      Alert.alert('Error', 'Failed to capture drawing');
+        console.error('Capture failed', error);
+        Alert.alert('Error', 'Failed to capture drawing');
+        return null; // Return null to indicate failure
     }
+};
+
+  const prepareImageFormData = async () => {
+    const uri = await captureDrawing();
+
+    if (!uri) {
+      console.error('URI is not defined.');
+      return null;
+    }
+
+    const formData = new FormData();
+    const fixedUri = Platform.OS === 'android' ? uri : uri.replace('file://', '');
+    console.log('Fixed URI:', fixedUri);
+
+    formData.append('image', {
+      uri: fixedUri,
+      type: 'image/jpeg',
+      name: 'drawing.jpg',
+    });
+
+    for (let [key, value] of formData.entries()) {
+      console.log(`${key}: ${value}`);
+    }
+
+    return formData;
+  };
+
+
+  const sendImageToBackend = async () => {
+    const formData = await prepareImageFormData();
+    // Check if formData is null before sending
+    if (!formData) {
+        alert('Failed to prepare image data');
+        return;
+    }
+    console.log('Form data:', formData)
+
+    fetch('http://127.0.0.1:5000/predict', {
+    method: 'POST',
+    body: formData,
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Success:', data);
+        if (data && data.predictedDigit !== undefined) {
+            alert(`Predicted digit: ${data.predictedDigit}`);
+        } else {
+            alert('Failed to predict digit');
+        }
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+        alert('Failed to predict digit');
+    });
+
   };
 
   const clearDrawing = () => {
@@ -81,7 +138,7 @@ const App = () => {
         </Svg>
         <View
           style={StyleSheet.absoluteFill}
-          onStartShouldSetRespotnder={() => true}
+          onStartShouldSetResponder={() => true}
           onMoveShouldSetResponder={() => true}
           onResponderGrant={handleStartDrawing}
           onResponderMove={handleDrawing}
@@ -89,7 +146,7 @@ const App = () => {
         />
       </View>
       <View style={styles.buttons}>
-        <TouchableOpacity onPress={captureDrawing} style={styles.clearButton}>
+        <TouchableOpacity onPress={() => sendImageToBackend()} style={styles.clearButton}>
           <Text style={styles.clearButtonText}>Capture Drawing</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={clearDrawing} style={styles.clearButton}>
