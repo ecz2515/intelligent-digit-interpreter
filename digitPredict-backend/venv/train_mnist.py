@@ -3,6 +3,7 @@ from tensorflow.keras.datasets import mnist
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Flatten, Dropout, Conv2D, MaxPooling2D
 from tensorflow.keras.utils import to_categorical
+from tensorflow.keras.callbacks import EarlyStopping
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
 # Load MNIST data
@@ -45,11 +46,23 @@ datagen = ImageDataGenerator(
     zoom_range=0.1
 )
 
+# Implement early stopping
+early_stopping = EarlyStopping(
+    monitor='val_loss',
+    patience=3,
+    restore_best_weights=True
+)
+
 # Fit the model using the augmented data generator
 train_generator = datagen.flow(train_images, train_labels, batch_size=32)
 
 # Train the model with more epochs
-model.fit(train_generator, epochs=10, validation_data=(test_images, test_labels))
+model.fit(
+    train_generator, 
+    epochs=3, 
+    validation_data=(test_images, test_labels),
+    callbacks=[early_stopping]
+    )
 
 # Save the model to a HDF5 file
 model.save('mnist_model.h5')
