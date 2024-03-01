@@ -127,9 +127,9 @@ const prepareImageFormData = async () => {
       <View style={styles.drawArea} ref={drawAreaRef}>
         <Svg style={StyleSheet.absoluteFill}>
           {paths.map((path, index) => (
-            <Path key={index} d={path} stroke="#FF0000" strokeWidth={4} fill="none" />
+            <Path key={index} d={path} stroke="#FFFFFF" strokeWidth={9} fill="none" />
           ))}
-          <Path d={currentPath} stroke="#FF0000" strokeWidth={4} fill="none" />
+          <Path d={currentPath} stroke="#FFFFFF" strokeWidth={9} fill="none" />
         </Svg>
         <View
           style={StyleSheet.absoluteFill}
@@ -181,7 +181,7 @@ const styles = StyleSheet.create({
   drawArea: {
     width: 300,
     height: 300,
-    backgroundColor: '#fff',
+    backgroundColor: '#000000',
     borderColor: '#000',
     borderWidth: 2,
     position: 'relative',
