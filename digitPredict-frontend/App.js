@@ -10,22 +10,8 @@ const App = () => {
   const drawAreaRef = useRef();
 
   const getRelativePosition = (event) => {
-    if (Platform.OS === 'web') {
-      const { pageX, pageY } = event.nativeEvent;
-      const rect = drawAreaRef.current.getBoundingClientRect();
-  
-      // Calculate scaling factors if any scaling is applied
-      const scaleX = drawAreaRef.current.offsetWidth / rect.width;
-      const scaleY = drawAreaRef.current.offsetHeight / rect.height;
-  
-      // Adjust pageX and pageY based on the scaling factors
-      const locationX = (pageX - rect.left) * scaleX;
-      const locationY = (pageY - rect.top) * scaleY;
-  
-      return { locationX, locationY };
-    } else {
-      return event.nativeEvent;
-    }
+    const { locationX, locationY } = event.nativeEvent;
+    return { locationX, locationY };
   };
   
   const handleStartDrawing = (event) => {
