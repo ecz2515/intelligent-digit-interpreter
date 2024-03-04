@@ -22,22 +22,25 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Installation
 
-### Git LFS Setup
+1. Git LFS Setup
 
-Before cloning the repository, ensure you have Git LFS installed on your system. This is necessary to properly manage large files in the project. Install Git LFS by following the instructions on the [Git LFS website](https://git-lfs.github.com/). After installing, set up Git LFS:
+    Before cloning the repository, ensure you have Git LFS installed on your system. This is necessary to properly manage large files in the project. Install Git LFS by following the instructions on the [Git LFS website](https://git-lfs.github.com/). After installing, set up Git LFS:
 
-```sh
-git lfs install
-```
+    ```sh
+    git lfs install
+    ```
 
-1. Clone the repository:
+
+2. Clone the repository:
 
     ```sh
     git clone https://github.com/ecz2515/intelligent-digit-interpreter.git
     cd intelligent-digit-interpreter
     ```
 
-2. Set up the backend:
+3. Set up the backend:
+
+    You will need to use two terminals for this step. One for the backend and one for the frontend. In the first terminal, navigate to the `digitPredict-backend` directory and set up the virtual environment:
 
     ```sh
     cd digitPredict-backend
@@ -46,26 +49,28 @@ git lfs install
     pip install -r requirements.txt
     ```
 
-3. Train the model (optional if you're using a pre-trained model):
+4. Train the model (optional if you're using a pre-trained model):
 
     ```sh
     python train_mnist.py
     ```
 
-4. Start the Flask server:
+5. Start the Flask server:
 
     ```sh
     python app.py
     ```
 
-5. Set up the frontend:
+6. Set up the frontend:
+
+    In the second terminal, navigate to the `digitPredict-frontend` directory and install the required packages:
 
     ```sh
     cd ../digitPredict-frontend
     npm install
     ```
 
-6. Start the React Native app:
+7. Start the React Native app:
 
     ```sh
     npm start
@@ -77,13 +82,8 @@ Once both the frontend and backend are running, navigate to the web interface pr
 
 ## Author
 
-- **Evan Chen** - Workshops Committee Chair, Winter 2024
+- **Evan Chen** - [ecz2515](chenevan0310@gmail.com)
 
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
-## Acknowledgments
-
-- Thanks to the TensorFlow and Flask communities for providing excellent documentation.
-- Inspired by the MNIST dataset's potential for educational projects.
