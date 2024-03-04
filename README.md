@@ -82,7 +82,7 @@ Once both the frontend and backend are running, navigate to the web interface pr
 
 ## Author
 
-- **Evan Chen** - [ecz2515](chenevan0310@gmail.com)
+- **Evan Chen** - [GitHub](https://github.com/ecz2515), [LinkedIn](https://www.linkedin.com/in/evanchen852/)
 
 ## License
 
