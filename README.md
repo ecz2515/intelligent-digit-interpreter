@@ -44,12 +44,10 @@ These instructions will get you a copy of the project up and running on your loc
 
     ```sh
     cd digitPredict-backend
-    python3 -m venv venv
-    source venv/bin/activate  # For Windows use `venv\Scripts\activate`
-    pip install -r requirements.txt
+    cd venv
     ```
 
-4. Train the model (optional if you're using a pre-trained model):
+4. Train the model:
 
     ```sh
     python train_mnist.py
