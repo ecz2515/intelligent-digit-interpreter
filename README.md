@@ -74,6 +74,10 @@ These instructions will get you a copy of the project up and running on your loc
     npm start
     ```
 
+8. Compile with web:
+
+    Press `w` in the terminal to open the web interface in your browser.
+
 ## Usage
 
 Once both the frontend and backend are running, navigate to the web interface provided by React Native, draw a digit in the canvas provided, and click "Predict" to see the model's digit prediction.
